@@ -117,8 +117,8 @@
   </div>
 
   <script>
-    // 1. Adımda aldığınız YENİ Apps Script URL'sini buraya yapıştırın.
-    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw6UbLOb2QaBAlL1uiSaZLcYTLNPLqAQqZpJWPqxnIIXauHFwvSOoub4O6bZsLWSex9/exec";
+    // LÜTFEN GOOGLE APPS SCRIPT'TEN ALDIĞINIZ GERÇEK URL'Yİ AŞAĞIDAKİ TIRNAK İÇİNE YAPIŞTIRIN:
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyXSWtTzu7O1ML9Y7rsmX0pemWhdbuf3E66z2Hs-gUeQsu25PIjnIDity2yffccH4DE/exec";
 
     let filesList = [];
     let currentIndex = 0;
@@ -159,7 +159,6 @@
       const reader = new FileReader();
 
       reader.onload = function(e) {
-        // Base64 prefixini (data:image/jpeg;base64,) kesiyoruz
         const base64Data = e.target.result.split(",")[1];
         
         document.getElementById('status').innerHTML = `Yükleniyor... (${currentIndex + 1}/${filesList.length})`;
@@ -170,11 +169,11 @@
           base64: base64Data
         };
 
-        // Vercel'den Google API'ye post isteği atıyoruz
+        // Google Apps Script'e gönderim işlemi
         fetch(SCRIPT_URL, {
+          redirect: "follow", // Google'ın iç yönlendirmelerine izin veriyoruz (CORS için önemli)
           method: "POST",
           body: JSON.stringify(payload),
-          // CORS preflight hatası almamak için text/plain kullanmak kritik bir detaydır
           headers: {
             "Content-Type": "text/plain;charset=utf-8"
           }
@@ -189,7 +188,7 @@
           }
         })
         .catch(err => {
-          document.getElementById('status').innerHTML = "❌ Hata oluştu. Lütfen tekrar deneyin.";
+          document.getElementById('status').innerHTML = "❌ Hata oluştu. Lütfen bağlantınızı kontrol edip tekrar deneyin.";
           document.getElementById('btn').disabled = false;
           console.error(err);
         });
