@@ -2,417 +2,98 @@
 <html lang="tr">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Anılarımız | oğuzhande</title>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Great+Vibes&display=swap" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#9d624d">
+  <title>Anılarımız | Hande & Oğuzhan</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Great+Vibes&family=Playfair+Display:ital,wght@0,500;0,600;1,400&display=swap" rel="stylesheet">
   <style>
-    body {
-      font-family: 'Playfair Display', serif;
-      background-color: #fcf8f2;
-      color: #4a3b32;
-      text-align: center;
-      padding: 0;
-      margin: 0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-    }
-    .container {
-      background: #ffffff;
-      padding: 40px 30px;
-      border-radius: 16px;
-      box-shadow: 0 10px 25px rgba(139, 90, 68, 0.1);
-      max-width: 400px;
-      width: 90%;
-      border: 1px solid #eaddd3;
-      position: relative;
-    }
-    h1 {
-      font-family: 'Great Vibes', cursive;
-      font-size: 48px;
-      color: #b06d51;
-      margin: 0 0 5px 0;
-      font-weight: normal;
-    }
-    h2 {
-      font-size: 14px;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      color: #8c7668;
-      margin-bottom: 25px;
-      border-bottom: 1px solid #eaddd3;
-      padding-bottom: 15px;
-    }
-    p {
-      font-size: 15px;
-      color: #6d5b51;
-      line-height: 1.5;
-      margin-bottom: 25px;
-    }
-    .btn-main {
-      background-color: #b06d51;
-      color: white;
-      padding: 14px 24px;
-      border: none;
-      border-radius: 8px;
-      font-size: 16px;
-      font-family: 'Playfair Display', serif;
-      cursor: pointer;
-      width: 100%;
-      transition: background 0.3s;
-      margin-bottom: 15px;
-    }
-    .btn-main:hover {
-      background-color: #8c553d;
-    }
-    .btn-secondary {
-      background-color: #fcf8f2;
-      color: #b06d51;
-      border: 1px solid #b06d51;
-    }
-    .btn-secondary:hover {
-      background-color: #f7ede6;
-    }
-    .btn-main:disabled {
-      background-color: #d8baa8;
-      cursor: not-allowed;
-    }
-    
-    /* Ekran Geçişleri İçin Sınıflar */
-    .screen { display: none; }
-    .screen.active { display: block; }
-    .back-btn {
-      font-size: 12px;
-      color: #8c7668;
-      text-decoration: underline;
-      cursor: pointer;
-      margin-top: 20px;
-      display: inline-block;
-    }
-
-    /* Fotoğraf Yükleme CSS */
-    .custom-file-upload {
-      border: 1px dashed #b06d51;
-      display: block;
-      padding: 20px;
-      cursor: pointer;
-      border-radius: 8px;
-      background-color: #fcf8f2;
-      transition: all 0.3s;
-      margin-bottom: 20px;
-    }
-    .custom-file-upload:hover { background-color: #f7ede6; }
-    input[type="file"] { display: none; }
-    .file-icon { font-size: 24px; margin-bottom: 10px; display: block; }
-    
-    /* Not Ekranı CSS */
-    .postcard-container {
-      background-color: #f4e9df;
-      border: 1px solid #c2a792;
-      padding: 20px;
-      border-radius: 4px;
-      margin-bottom: 20px;
-      position: relative;
-    }
-    .input-field {
-      width: 90%;
-      padding: 10px;
-      margin-bottom: 15px;
-      border: none;
-      border-bottom: 1px dashed #8c7668;
-      background: transparent;
-      font-family: 'Playfair Display', serif;
-      font-size: 16px;
-      color: #4a3b32;
-      text-align: center;
-    }
-    .input-field:focus { outline: none; border-bottom: 2px dashed #b06d51; }
-    
-    textarea.input-field {
-      resize: none;
-      height: 120px;
-      text-align: left;
-      line-height: 30px;
-      background-image: repeating-linear-gradient(transparent, transparent 29px, #c2a792 30px);
-      border-bottom: none;
-    }
-
-    #status, #note-status { margin-top: 20px; font-weight: bold; color: #b06d51; }
-    .selected-files { font-size: 13px; color: #8c7668; margin-bottom: 15px; font-style: italic; }
-
-    /* Footer / Alt Bilgi CSS */
-    .footer-text {
-      font-size: 11px;
-      color: #8c7668;
-      margin-top: 35px;
-      border-top: 1px solid #eaddd3;
-      padding-top: 20px;
-      line-height: 1.5;
-      font-style: italic;
-    }
-
-    /* Pop-up (Modal) CSS */
-    .modal-overlay {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(74, 59, 50, 0.7); /* Koyu kahve yarı saydam arka plan */
-      z-index: 1000;
-      justify-content: center;
-      align-items: center;
-    }
-    .modal-overlay.active {
-      display: flex;
-    }
-    .modal-content {
-      background: #ffffff;
-      padding: 40px 30px;
-      border-radius: 16px;
-      text-align: center;
-      max-width: 320px;
-      width: 85%;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
-      border: 1px solid #eaddd3;
-      animation: fadeIn 0.3s ease-in-out;
-    }
-    .modal-content h3 {
-      font-family: 'Great Vibes', cursive;
-      font-size: 38px;
-      color: #b06d51;
-      margin: 0 0 10px 0;
-      font-weight: normal;
-    }
-    .modal-content p {
-      font-size: 16px;
-      color: #6d5b51;
-      margin-bottom: 25px;
-      line-height: 1.5;
-    }
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(-10px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
+    :root { --wine:#9d624d; --wine-dark:#754332; --ink:#483a34; --muted:#796961; --paper:#fffdfa; --cream:#f7f0e8; --line:#e8d9ce; --sage:#a4aa91; }
+    * { box-sizing:border-box; }
+    body { min-height:100vh; margin:0; color:var(--ink); background:radial-gradient(circle at 12% 8%,#fff 0 2%,transparent 25%),radial-gradient(circle at 90% 90%,#ead9cd 0,transparent 29%),var(--cream); font-family:"DM Sans",sans-serif; display:grid; place-items:center; padding:24px 16px; }
+    .shell { width:min(100%,470px); position:relative; }
+    .shell::before,.shell::after { content:""; position:absolute; width:112px; height:112px; border:1px solid rgba(157,98,77,.2); border-radius:50%; z-index:-1; }
+    .shell::before { top:-24px; left:-20px; } .shell::after { right:-22px; bottom:-20px; }
+    .container { overflow:hidden; background:rgba(255,253,250,.93); border:1px solid rgba(255,255,255,.9); border-radius:28px; box-shadow:0 22px 55px rgba(91,59,42,.14); }
+    header { text-align:center; padding:34px 28px 23px; background:linear-gradient(135deg,#f5eae0,#fbf7f2 65%); border-bottom:1px solid var(--line); }
+    .eyebrow { display:flex; align-items:center; justify-content:center; gap:9px; color:var(--wine); font-size:10px; font-weight:600; letter-spacing:2px; text-transform:uppercase; }
+    .eyebrow::before,.eyebrow::after { content:""; width:22px; height:1px; background:currentColor; }
+    h1 { font-family:"Great Vibes",cursive; font-size:57px; line-height:.95; font-weight:400; color:var(--wine); margin:12px 0 9px; }
+    h2 { margin:0; font-family:"Playfair Display",serif; font-size:13px; font-weight:600; letter-spacing:3px; color:var(--ink); }
+    main { padding:28px; }
+    .screen { display:none; animation:appear .35s ease both; } .screen.active { display:block; }
+    @keyframes appear { from { opacity:0; transform:translateY(7px); } to { opacity:1; transform:none; } }
+    .intro { font-family:"Playfair Display",serif; font-size:17px; line-height:1.65; text-align:center; color:var(--muted); margin:0 0 24px; }
+    .home-mark { display:grid; place-items:center; width:68px; height:68px; margin:0 auto 18px; color:var(--wine); font:27px "Playfair Display",serif; border-radius:50%; background:#f7e9de; border:1px solid #ebd5c6; }
+    .action-grid { display:grid; gap:12px; }
+    button { appearance:none; border:0; font:600 15px "DM Sans",sans-serif; cursor:pointer; }
+    .btn { min-height:56px; padding:13px 17px; border-radius:14px; transition:transform .2s,box-shadow .2s,background .2s; display:flex; gap:12px; align-items:center; justify-content:center; width:100%; }
+    .btn:hover { transform:translateY(-2px); } .btn:active { transform:translateY(0); } .btn:disabled { opacity:.62; cursor:wait; transform:none; }
+    .btn-main { color:white; background:var(--wine); box-shadow:0 8px 16px rgba(157,98,77,.22); }
+    .btn-main:hover { background:var(--wine-dark); box-shadow:0 11px 20px rgba(117,67,50,.25); }
+    .btn-outline { color:var(--wine); background:#fffaf6; border:1px solid #dfbdab; }
+    .btn-icon { font-size:19px; line-height:1; }
+    .screen-title { margin:0 0 7px; color:var(--wine); font:38px "Great Vibes",cursive; text-align:center; }
+    .screen-copy { margin:0 auto 22px; max-width:340px; color:var(--muted); font:15px/1.6 "Playfair Display",serif; text-align:center; }
+    .upload-zone { display:block; padding:26px 18px; margin-bottom:14px; color:var(--wine); text-align:center; cursor:pointer; border:1.5px dashed #c99982; border-radius:18px; background:linear-gradient(145deg,#fffdfa,#f9efe8); transition:.2s; }
+    .upload-zone:hover,.upload-zone:focus-within { background:#f8e9df; border-color:var(--wine); }
+    .upload-zone strong { display:block; margin:9px 0 4px; font-size:15px; } .upload-zone small { color:var(--muted); font-size:12px; }
+    .upload-icon { display:grid; place-items:center; width:44px; height:44px; margin:auto; background:#f2d9ca; border-radius:14px; font-size:20px; }
+    input[type=file] { position:absolute; width:1px; height:1px; opacity:0; }
+    .selected-files { min-height:20px; margin:0 0 15px; color:var(--muted); text-align:center; font-size:13px; }
+    .field-label { display:block; color:var(--ink); font-size:12px; font-weight:600; letter-spacing:.4px; margin:0 0 8px 2px; }
+    .text-input,.note-area { width:100%; color:var(--ink); background:#fffdfa; border:1px solid var(--line); border-radius:12px; outline:0; font:15px "DM Sans",sans-serif; transition:border .2s,box-shadow .2s; }
+    .text-input { height:54px; padding:0 15px; margin-bottom:18px; }
+    .text-input:focus,.note-area:focus { border-color:#c28a72; box-shadow:0 0 0 4px rgba(194,138,114,.14); }
+    .postcard { position:relative; padding:23px 19px 17px; margin-bottom:17px; overflow:hidden; background:linear-gradient(130deg,#fffefa,#faf1e9); border:1px solid #ead6c7; border-radius:18px; box-shadow:0 8px 18px rgba(112,77,55,.08); }
+    .postcard::before { content:""; position:absolute; inset:9px; border:1px solid rgba(196,143,113,.32); border-radius:12px; pointer-events:none; }
+    .postcard > * { position:relative; } .card-heading { color:var(--wine); text-align:center; font:32px "Great Vibes",cursive; margin:0 0 15px; }
+    .note-area { display:block; min-height:165px; padding:13px 13px; resize:vertical; line-height:1.75; background-color:transparent; background-image:linear-gradient(transparent 31px,#e8d7ca 32px); background-size:100% 32px; border:0; border-radius:0; box-shadow:none!important; }
+    .note-area:focus { box-shadow:none; } .note-area::placeholder { color:#aa9990; }
+    .status { min-height:22px; margin:13px 0 0; color:var(--wine); font-size:13px; font-weight:500; text-align:center; }
+    .back-btn { display:block; margin:22px auto 0; padding:4px; color:var(--muted); background:transparent; font-size:13px; text-decoration:underline; text-underline-offset:3px; }
+    footer { padding:0 30px 24px; color:#93827a; font:italic 11px/1.55 "Playfair Display",serif; text-align:center; }
+    @media (max-width:420px) { body { padding:0; place-items:stretch; } .shell { width:100%; } .shell::before,.shell::after { display:none; } .container { min-height:100vh; border:0; border-radius:0; } header { padding-top:calc(27px + env(safe-area-inset-top)); } main { padding:25px 20px; } h1 { font-size:53px; } .postcard { padding:20px 15px 14px; } footer { padding-bottom:calc(20px + env(safe-area-inset-bottom)); } }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>oğuzhande</h1>
-    <h2>HANDE & OĞUZHAN</h2>
-
-    <!-- ANA EKRAN -->
-    <div id="home-screen" class="screen active">
-      <p>Bu özel günümüzde yanımızda olduğunuz için teşekkür ederiz. Lütfen anılarınızı ve dileklerinizi bizimle paylaşın. 🤎</p>
-      <button class="btn-main" onclick="showScreen('photo-screen')">📸 Fotoğraf/Video Yükle</button>
-      <button class="btn-main btn-secondary" onclick="showScreen('name-screen')">✍️ Bize Bir Not Bırakın</button>
-    </div>
-
-    <!-- FOTOĞRAF YÜKLEME EKRANI -->
-    <div id="photo-screen" class="screen">
-      <p>Çektiğiniz fotoğraf ve videoları bizimle paylaşın.<br>Bu özel günümüzden kareleri bizimle paylaşmanız bizi çok mutlu eder.</p>
-      
-      <label class="custom-file-upload">
-        <span class="file-icon">📸</span>
-        <span id="file-label-text">Fotoğraf veya Video Seçmek İçin Dokunun</span>
-        <input type="file" id="file" name="file" accept="image/*,video/*" multiple onchange="updateLabel()">
-      </label>
-      
-      <div id="selected-files" class="selected-files"></div>
-      <button id="btn" class="btn-main" onclick="startUpload()">Yüklemeyi Başlat</button>
-      <div id="status"></div>
-      <br>
-      <span class="back-btn" onclick="showScreen('home-screen')">← Ana Ekrana Dön</span>
-    </div>
-
-    <!-- İSİM ALMA EKRANI -->
-    <div id="name-screen" class="screen">
-      <p style="font-family: 'Great Vibes', cursive; font-size: 34px; color: #b06d51; margin: 0 0 10px 0;">Bize Bir Not Bırakın...</p>
-      <p>Güzel dilekleriniz, tavsiyeleriniz ya da içinizden geçen birkaç satır...<br>Nişanımızın ardından hepsini keyifle okuyacağız.</p>
-      <input type="text" id="visitor-name" class="input-field" placeholder="Adınız ve Soyadınız">
-      <button class="btn-main" onclick="goToNoteScreen()">Devam Et</button>
-      <span class="back-btn" onclick="showScreen('home-screen')">← Ana Ekrana Dön</span>
-    </div>
-
-    <!-- NOT YAZMA EKRANI -->
-    <div id="note-screen" class="screen">
-      <div class="postcard-container">
-        <p style="font-family: 'Great Vibes', cursive; font-size: 28px; color: #6d5b51; margin-top: 0;">Bize bir not bırakın...</p>
-        <textarea id="visitor-note" class="input-field" placeholder="Dileklerinizi buraya yazabilirsiniz..."></textarea>
-      </div>
-      <button id="btn-note" class="btn-main" onclick="submitNote()">Notu Gönder</button>
-      <div id="note-status"></div>
-      <span class="back-btn" onclick="showScreen('home-screen')">← Ana Ekrana Dön</span>
-    </div>
-
-    <!-- GÜVENLİK/GİZLİLİK ALT BİLGİSİ -->
-    <div class="footer-text">
-      Bu sayfa sadece Hande & Oğuzhan’ın nişanı için hazırlanmıştır. Paylaştığınız fotoğraf, video ve mesajlar yalnızca çift tarafından görüntülenebilir.
-    </div>
-
-  </div>
-
-  <!-- TEŞEKKÜR POP-UP (MODAL) EKRANI -->
-  <div id="thank-you-modal" class="modal-overlay">
-    <div class="modal-content">
-      <h3>Mesajınız bize ulaştı 🤍</h3>
-      <p>Bu güzel günümüzün bir parçası olduğunuz için teşekkür ederiz.</p>
-      <button class="btn-main" onclick="closeModal()">Kapat</button>
-    </div>
-  </div>
-
+  <div class="shell"><div class="container">
+    <header><div class="eyebrow">Nişan Hatırası</div><h1>oğuzhande</h1><h2>HANDE &amp; OĞUZHAN</h2></header>
+    <main>
+      <section id="home-screen" class="screen active">
+        <div class="home-mark">H&nbsp;&amp;&nbsp;O</div>
+        <p class="intro">Bu güzel günümüzde yanımızda olduğunuz için teşekkür ederiz. Anılarınızı ve güzel dileklerinizi bizimle paylaşın.</p>
+        <div class="action-grid"><button class="btn btn-main" onclick="showScreen('photo-screen')"><span class="btn-icon">⌑</span> Fotoğraf veya video yükle</button><button class="btn btn-outline" onclick="showScreen('name-screen')"><span class="btn-icon">♡</span> Bize bir not bırak</button></div>
+      </section>
+      <section id="photo-screen" class="screen">
+        <h3 class="screen-title">Anılarınızı paylaşın</h3><p class="screen-copy">Çektiğiniz fotoğraf ve videoları bize gönderin; gecemizin en güzel kareleri sizinle tamamlanacak.</p>
+        <label class="upload-zone"><span class="upload-icon">⌑</span><strong>Dosyalarınızı seçin</strong><small>Fotoğraf veya video • Birden fazla seçebilirsiniz</small><input type="file" id="file" accept="image/*,video/*" multiple onchange="updateLabel()"></label>
+        <div id="selected-files" class="selected-files" aria-live="polite"></div><button id="btn" class="btn btn-main" onclick="startUpload()">Yüklemeyi başlat</button><div id="status" class="status" aria-live="polite"></div><button class="back-btn" onclick="showScreen('home-screen')">← Ana ekrana dön</button>
+      </section>
+      <section id="name-screen" class="screen">
+        <h3 class="screen-title">Bize bir not bırakın</h3><p class="screen-copy">Güzel dilekleriniz, tavsiyeleriniz ya da içinizden geçen birkaç satır… Hepsini keyifle okuyacağız.</p>
+        <label class="field-label" for="visitor-name">Adınız soyadınız</label><input id="visitor-name" class="text-input" type="text" autocomplete="name" placeholder="Örn. Ayşe Yılmaz"><button class="btn btn-main" onclick="goToNoteScreen()">Devam et <span>→</span></button><button class="back-btn" onclick="showScreen('home-screen')">← Ana ekrana dön</button>
+      </section>
+      <section id="note-screen" class="screen">
+        <div class="postcard"><p class="card-heading">Sevgili Hande &amp; Oğuzhan,</p><textarea id="visitor-note" class="note-area" maxlength="1500" placeholder="Dileklerinizi buraya yazabilirsiniz..."></textarea></div>
+        <button id="btn-note" class="btn btn-main" onclick="submitNote()">Notu sevgiyle gönder ♡</button><div id="note-status" class="status" aria-live="polite"></div><button class="back-btn" onclick="showScreen('name-screen')">← İsme geri dön</button>
+      </section>
+    </main>
+    <footer>Bu sayfa Hande &amp; Oğuzhan’ın nişanı için hazırlanmıştır. Paylaşımlarınız yalnızca çift tarafından görüntülenebilir.</footer>
+  </div></div>
   <script>
-    // Mevcut Script URL'niz:
-    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxp8U9Icw8fSq3SR64jEGCk4Pfi87T3sTZCqwtV2c_NeWrV3je8z1gjTb5SKSfiX7sB/exec";
-
-    // --- EKRAN GEÇİŞ MANTIĞI ---
-    function showScreen(screenId) {
-      document.querySelectorAll('.screen').forEach(el => el.classList.remove('active'));
-      document.getElementById(screenId).classList.add('active');
-      
-      // Ekran değiştiğinde status mesajlarını temizle
-      document.getElementById('status').innerHTML = "";
-      document.getElementById('note-status').innerHTML = "";
-    }
-
-    function goToNoteScreen() {
-      const name = document.getElementById('visitor-name').value.trim();
-      if(name === "") {
-        alert("Lütfen not bırakmadan önce isminizi girin.");
-        return;
-      }
-      showScreen('note-screen');
-    }
-
-    // --- POP-UP KAPATMA MANTIĞI ---
-    function closeModal() {
-      document.getElementById('thank-you-modal').classList.remove('active');
-      showScreen('home-screen'); // Ana ekrana geri dön
-    }
-
-    // --- NOT GÖNDERME MANTIĞI ---
-    function submitNote() {
-      const name = document.getElementById('visitor-name').value.trim();
-      const noteMessage = document.getElementById('visitor-note').value.trim();
-
-      if(noteMessage === "") {
-        alert("Lütfen bir mesaj yazın.");
-        return;
-      }
-
-      document.getElementById('btn-note').disabled = true;
-      document.getElementById('note-status').innerHTML = "Notunuz sevgiyle iletiliyor... 🕊️";
-
-      const payload = {
-        type: "note",
-        name: name,
-        message: noteMessage
-      };
-
-      fetch(SCRIPT_URL, {
-        redirect: "follow",
-        method: "POST",
-        body: JSON.stringify(payload),
-        headers: { "Content-Type": "text/plain;charset=utf-8" }
-      })
-      .then(response => response.json())
-      .then(result => {
-        if (result.status === 'success') {
-          // Başarılı olduğunda loading yazısını sil ve Pop-up'ı aç
-          document.getElementById('note-status').innerHTML = ""; 
-          document.getElementById('thank-you-modal').classList.add('active');
-          
-          // Formu temizle
-          document.getElementById('visitor-note').value = ""; 
-          document.getElementById('visitor-name').value = ""; 
-        } else {
-          throw new Error(result.message);
-        }
-      })
-      .catch(err => {
-        document.getElementById('note-status').innerHTML = "❌ Bir hata oluştu. Lütfen tekrar deneyin.";
-        console.error(err);
-      })
-      .finally(() => {
-        document.getElementById('btn-note').disabled = false;
-      });
-    }
-
-    // --- FOTOĞRAF YÜKLEME MANTIĞI ---
-    let filesList = [];
-    let currentIndex = 0;
-
-    function updateLabel() {
-      const fileInput = document.getElementById('file');
-      const labelText = document.getElementById('selected-files');
-      if (fileInput.files.length > 0) {
-        labelText.innerHTML = fileInput.files.length + " dosya seçildi.";
-      }
-    }
-
-    function startUpload() {
-      const fileInput = document.getElementById('file');
-      filesList = fileInput.files;
-      
-      if (filesList.length === 0) {
-        alert('Lütfen en az bir dosya seçin.');
-        return;
-      }
-      
-      document.getElementById('btn').disabled = true;
-      currentIndex = 0;
-      uploadNextFile();
-    }
-
-    function uploadNextFile() {
-      if (currentIndex >= filesList.length) {
-        document.getElementById('status').innerHTML = "✅ Tüm anılar başarıyla yüklendi! Teşekkür ederiz.";
-        document.getElementById('btn').disabled = false;
-        document.getElementById('btn').innerText = "Daha Fazla Yükle";
-        document.getElementById('file').value = "";
-        document.getElementById('selected-files').innerHTML = "";
-        return;
-      }
-
-      const file = filesList[currentIndex];
-      const reader = new FileReader();
-
-      reader.onload = function(e) {
-        const base64Data = e.target.result.split(",")[1];
-        document.getElementById('status').innerHTML = `Yükleniyor... (${currentIndex + 1}/${filesList.length})`;
-
-        const payload = {
-          type: "file",
-          fileName: file.name,
-          mimeType: file.type,
-          base64: base64Data
-        };
-
-        fetch(SCRIPT_URL, {
-          redirect: "follow",
-          method: "POST",
-          body: JSON.stringify(payload),
-          headers: { "Content-Type": "text/plain;charset=utf-8" }
-        })
-        .then(response => response.json())
-        .then(result => {
-          if (result.status === 'success') {
-            currentIndex++;
-            uploadNextFile();
-          } else {
-            throw new Error(result.message);
-          }
-        })
-        .catch(err => {
-          document.getElementById('status').innerHTML = "❌ Hata oluştu. Lütfen bağlantınızı kontrol edip tekrar deneyin.";
-          document.getElementById('btn').disabled = false;
-          console.error(err);
-        });
-      };
-      reader.readAsDataURL(file);
-    }
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx4ib7Z-xhrjvnzziHn_8abiK6LXU8IvhVetWHlgcMY752XxwYfhkau-Za276jSJ-Fq/exec";
+    
+    const status = id => document.getElementById(id);
+    function showScreen(id) { document.querySelectorAll('.screen').forEach(el => el.classList.remove('active')); status(id).classList.add('active'); status('status').textContent = ''; status('note-status').textContent = ''; window.scrollTo({top:0,behavior:'smooth'}); }
+    function goToNoteScreen() { if (!status('visitor-name').value.trim()) { alert('Lütfen not bırakmadan önce isminizi girin.'); status('visitor-name').focus(); return; } showScreen('note-screen'); }
+    async function send(payload) { const response = await fetch(SCRIPT_URL,{redirect:'follow',method:'POST',body:JSON.stringify(payload),headers:{'Content-Type':'text/plain;charset=utf-8'}}); const result = await response.json(); if(result.status !== 'success') throw new Error(result.message || 'Gönderim başarısız.'); }
+    async function submitNote() { const name=status('visitor-name').value.trim(), message=status('visitor-note').value.trim(), button=status('btn-note'); if(!message){alert('Lütfen bir mesaj yazın.');status('visitor-note').focus();return;} button.disabled=true;status('note-status').textContent='Notunuz sevgiyle iletiliyor…';try{await send({type:'note',name,message});status('note-status').textContent='✓ Notunuz kaydedildi. Çok teşekkür ederiz!';status('visitor-note').value='';status('visitor-name').value='';}catch(error){status('note-status').textContent='Gönderirken bir hata oluştu. Lütfen tekrar deneyin.';console.error(error);}finally{button.disabled=false;} }
+    let filesList=[],currentIndex=0;
+    function updateLabel(){const files=status('file').files;status('selected-files').textContent=files.length ? `${files.length} dosya seçildi.` : '';}
+    function startUpload(){filesList=status('file').files;if(!filesList.length){alert('Lütfen en az bir dosya seçin.');return;}status('btn').disabled=true;currentIndex=0;uploadNextFile();}
+    function uploadNextFile(){if(currentIndex>=filesList.length){status('status').textContent='✓ Tüm anılar başarıyla yüklendi. Teşekkür ederiz!';status('btn').disabled=false;status('btn').textContent='Daha fazla yükle';status('file').value='';status('selected-files').textContent='';return;}const file=filesList[currentIndex],reader=new FileReader();reader.onload=async e=>{status('status').textContent=`Yükleniyor… (${currentIndex+1}/${filesList.length})`;try{await send({type:'file',fileName:file.name,mimeType:file.type,base64:e.target.result.split(',')[1]});currentIndex++;uploadNextFile();}catch(error){status('status').textContent='Yükleme sırasında hata oluştu. Bağlantınızı kontrol edip tekrar deneyin.';status('btn').disabled=false;console.error(error);}};reader.readAsDataURL(file);}
   </script>
 </body>
 </html>
