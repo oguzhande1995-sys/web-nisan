@@ -151,6 +151,51 @@
       line-height: 1.5;
       font-style: italic;
     }
+
+    /* Pop-up (Modal) CSS */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(74, 59, 50, 0.7); /* Koyu kahve yarı saydam arka plan */
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
+    }
+    .modal-overlay.active {
+      display: flex;
+    }
+    .modal-content {
+      background: #ffffff;
+      padding: 40px 30px;
+      border-radius: 16px;
+      text-align: center;
+      max-width: 320px;
+      width: 85%;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+      border: 1px solid #eaddd3;
+      animation: fadeIn 0.3s ease-in-out;
+    }
+    .modal-content h3 {
+      font-family: 'Great Vibes', cursive;
+      font-size: 38px;
+      color: #b06d51;
+      margin: 0 0 10px 0;
+      font-weight: normal;
+    }
+    .modal-content p {
+      font-size: 16px;
+      color: #6d5b51;
+      margin-bottom: 25px;
+      line-height: 1.5;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
   </style>
 </head>
 <body>
@@ -209,8 +254,17 @@
 
   </div>
 
+  <!-- TEŞEKKÜR POP-UP (MODAL) EKRANI -->
+  <div id="thank-you-modal" class="modal-overlay">
+    <div class="modal-content">
+      <h3>Mesajınız bize ulaştı 🤍</h3>
+      <p>Bu güzel günümüzün bir parçası olduğunuz için teşekkür ederiz.</p>
+      <button class="btn-main" onclick="closeModal()">Kapat</button>
+    </div>
+  </div>
+
   <script>
-    // Yeni Script URL'niz:
+    // Mevcut Script URL'niz:
     const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxp8U9Icw8fSq3SR64jEGCk4Pfi87T3sTZCqwtV2c_NeWrV3je8z1gjTb5SKSfiX7sB/exec";
 
     // --- EKRAN GEÇİŞ MANTIĞI ---
@@ -230,6 +284,12 @@
         return;
       }
       showScreen('note-screen');
+    }
+
+    // --- POP-UP KAPATMA MANTIĞI ---
+    function closeModal() {
+      document.getElementById('thank-you-modal').classList.remove('active');
+      showScreen('home-screen'); // Ana ekrana geri dön
     }
 
     // --- NOT GÖNDERME MANTIĞI ---
@@ -260,9 +320,13 @@
       .then(response => response.json())
       .then(result => {
         if (result.status === 'success') {
-          document.getElementById('note-status').innerHTML = "✅ Notunuz başarıyla kaydedildi! Çok teşekkür ederiz.";
-          document.getElementById('visitor-note').value = ""; // Formu temizle
-          document.getElementById('visitor-name').value = ""; // Formu temizle
+          // Başarılı olduğunda loading yazısını sil ve Pop-up'ı aç
+          document.getElementById('note-status').innerHTML = ""; 
+          document.getElementById('thank-you-modal').classList.add('active');
+          
+          // Formu temizle
+          document.getElementById('visitor-note').value = ""; 
+          document.getElementById('visitor-name').value = ""; 
         } else {
           throw new Error(result.message);
         }
