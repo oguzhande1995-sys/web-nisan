@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Fotoğraf Yükle | oğuzhande</title>
+  <title>Anılarımız | oğuzhande</title>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Great+Vibes&display=swap" rel="stylesheet">
   <style>
     body {
@@ -26,6 +26,7 @@
       max-width: 400px;
       width: 90%;
       border: 1px solid #eaddd3;
+      position: relative;
     }
     h1 {
       font-family: 'Great Vibes', cursive;
@@ -49,28 +50,7 @@
       line-height: 1.5;
       margin-bottom: 25px;
     }
-    .custom-file-upload {
-      border: 1px dashed #b06d51;
-      display: block;
-      padding: 20px;
-      cursor: pointer;
-      border-radius: 8px;
-      background-color: #fcf8f2;
-      transition: all 0.3s;
-      margin-bottom: 20px;
-    }
-    .custom-file-upload:hover {
-      background-color: #f7ede6;
-    }
-    input[type="file"] {
-      display: none;
-    }
-    .file-icon {
-      font-size: 24px;
-      margin-bottom: 10px;
-      display: block;
-    }
-    button {
+    .btn-main {
       background-color: #b06d51;
       color: white;
       padding: 14px 24px;
@@ -81,20 +61,94 @@
       cursor: pointer;
       width: 100%;
       transition: background 0.3s;
+      margin-bottom: 15px;
     }
-    button:disabled {
+    .btn-main:hover {
+      background-color: #8c553d;
+    }
+    .btn-secondary {
+      background-color: #fcf8f2;
+      color: #b06d51;
+      border: 1px solid #b06d51;
+    }
+    .btn-secondary:hover {
+      background-color: #f7ede6;
+    }
+    .btn-main:disabled {
       background-color: #d8baa8;
       cursor: not-allowed;
     }
-    #status {
-      margin-top: 20px;
-      font-weight: bold;
-      color: #b06d51;
-    }
-    .selected-files {
-      font-size: 13px;
+    
+    /* Ekran Geçişleri İçin Sınıflar */
+    .screen { display: none; }
+    .screen.active { display: block; }
+    .back-btn {
+      font-size: 12px;
       color: #8c7668;
+      text-decoration: underline;
+      cursor: pointer;
+      margin-top: 20px;
+      display: inline-block;
+    }
+
+    /* Fotoğraf Yükleme CSS */
+    .custom-file-upload {
+      border: 1px dashed #b06d51;
+      display: block;
+      padding: 20px;
+      cursor: pointer;
+      border-radius: 8px;
+      background-color: #fcf8f2;
+      transition: all 0.3s;
+      margin-bottom: 20px;
+    }
+    .custom-file-upload:hover { background-color: #f7ede6; }
+    input[type="file"] { display: none; }
+    .file-icon { font-size: 24px; margin-bottom: 10px; display: block; }
+    
+    /* Not Ekranı CSS */
+    .postcard-container {
+      background-color: #f4e9df;
+      border: 1px solid #c2a792;
+      padding: 20px;
+      border-radius: 4px;
+      margin-bottom: 20px;
+      position: relative;
+    }
+    .input-field {
+      width: 90%;
+      padding: 10px;
       margin-bottom: 15px;
+      border: none;
+      border-bottom: 1px dashed #8c7668;
+      background: transparent;
+      font-family: 'Playfair Display', serif;
+      font-size: 16px;
+      color: #4a3b32;
+      text-align: center;
+    }
+    .input-field:focus { outline: none; border-bottom: 2px dashed #b06d51; }
+    
+    textarea.input-field {
+      resize: none;
+      height: 120px;
+      text-align: left;
+      line-height: 30px;
+      background-image: repeating-linear-gradient(transparent, transparent 29px, #c2a792 30px);
+      border-bottom: none;
+    }
+
+    #status, #note-status { margin-top: 20px; font-weight: bold; color: #b06d51; }
+    .selected-files { font-size: 13px; color: #8c7668; margin-bottom: 15px; font-style: italic; }
+
+    /* Footer / Alt Bilgi CSS */
+    .footer-text {
+      font-size: 11px;
+      color: #8c7668;
+      margin-top: 35px;
+      border-top: 1px solid #eaddd3;
+      padding-top: 20px;
+      line-height: 1.5;
       font-style: italic;
     }
   </style>
@@ -103,23 +157,126 @@
   <div class="container">
     <h1>oğuzhande</h1>
     <h2>HANDE & OĞUZHAN</h2>
-    <p>Çektiğiniz fotoğrafları buradan yükleyerek bizimle paylaşabilirsiniz. 🤎</p>
-    
-    <label class="custom-file-upload">
-      <span class="file-icon">📸</span>
-      <span id="file-label-text">Fotoğraf veya Video Seçmek İçin Dokunun</span>
-      <input type="file" id="file" name="file" accept="image/*,video/*" multiple onchange="updateLabel()">
-    </label>
-    
-    <div id="selected-files" class="selected-files"></div>
-    <button id="btn" onclick="startUpload()">Yüklemeyi Başlat</button>
-    <div id="status"></div>
+
+    <!-- ANA EKRAN -->
+    <div id="home-screen" class="screen active">
+      <p>Bu özel günümüzde yanımızda olduğunuz için teşekkür ederiz. Lütfen anılarınızı ve dileklerinizi bizimle paylaşın. 🤎</p>
+      <button class="btn-main" onclick="showScreen('photo-screen')">📸 Fotoğraf/Video Yükle</button>
+      <button class="btn-main btn-secondary" onclick="showScreen('name-screen')">✍️ Bize Bir Not Bırakın</button>
+    </div>
+
+    <!-- FOTOĞRAF YÜKLEME EKRANI -->
+    <div id="photo-screen" class="screen">
+      <p>Çektiğiniz fotoğraf ve videoları bizimle paylaşın.<br>Bu özel günümüzden kareleri bizimle paylaşmanız bizi çok mutlu eder.</p>
+      
+      <label class="custom-file-upload">
+        <span class="file-icon">📸</span>
+        <span id="file-label-text">Fotoğraf veya Video Seçmek İçin Dokunun</span>
+        <input type="file" id="file" name="file" accept="image/*,video/*" multiple onchange="updateLabel()">
+      </label>
+      
+      <div id="selected-files" class="selected-files"></div>
+      <button id="btn" class="btn-main" onclick="startUpload()">Yüklemeyi Başlat</button>
+      <div id="status"></div>
+      <br>
+      <span class="back-btn" onclick="showScreen('home-screen')">← Ana Ekrana Dön</span>
+    </div>
+
+    <!-- İSİM ALMA EKRANI -->
+    <div id="name-screen" class="screen">
+      <p style="font-family: 'Great Vibes', cursive; font-size: 34px; color: #b06d51; margin: 0 0 10px 0;">Bize Bir Not Bırakın...</p>
+      <p>Güzel dilekleriniz, tavsiyeleriniz ya da içinizden geçen birkaç satır...<br>Nişanımızın ardından hepsini keyifle okuyacağız.</p>
+      <input type="text" id="visitor-name" class="input-field" placeholder="Adınız ve Soyadınız">
+      <button class="btn-main" onclick="goToNoteScreen()">Devam Et</button>
+      <span class="back-btn" onclick="showScreen('home-screen')">← Ana Ekrana Dön</span>
+    </div>
+
+    <!-- NOT YAZMA EKRANI -->
+    <div id="note-screen" class="screen">
+      <div class="postcard-container">
+        <p style="font-family: 'Great Vibes', cursive; font-size: 28px; color: #6d5b51; margin-top: 0;">Bize bir not bırakın...</p>
+        <textarea id="visitor-note" class="input-field" placeholder="Dileklerinizi buraya yazabilirsiniz..."></textarea>
+      </div>
+      <button id="btn-note" class="btn-main" onclick="submitNote()">Notu Gönder</button>
+      <div id="note-status"></div>
+      <span class="back-btn" onclick="showScreen('home-screen')">← Ana Ekrana Dön</span>
+    </div>
+
+    <!-- GÜVENLİK/GİZLİLİK ALT BİLGİSİ -->
+    <div class="footer-text">
+      Bu sayfa sadece Hande & Oğuzhan’ın nişanı için hazırlanmıştır. Paylaştığınız fotoğraf, video ve mesajlar yalnızca çift tarafından görüntülenebilir.
+    </div>
+
   </div>
 
   <script>
-    // LÜTFEN GOOGLE APPS SCRIPT'TEN ALDIĞINIZ GERÇEK URL'Yİ AŞAĞIDAKİ TIRNAK İÇİNE YAPIŞTIRIN:
-    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyXSWtTzu7O1ML9Y7rsmX0pemWhdbuf3E66z2Hs-gUeQsu25PIjnIDity2yffccH4DE/exec";
+    // Yeni Script URL'niz:
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxp8U9Icw8fSq3SR64jEGCk4Pfi87T3sTZCqwtV2c_NeWrV3je8z1gjTb5SKSfiX7sB/exec";
 
+    // --- EKRAN GEÇİŞ MANTIĞI ---
+    function showScreen(screenId) {
+      document.querySelectorAll('.screen').forEach(el => el.classList.remove('active'));
+      document.getElementById(screenId).classList.add('active');
+      
+      // Ekran değiştiğinde status mesajlarını temizle
+      document.getElementById('status').innerHTML = "";
+      document.getElementById('note-status').innerHTML = "";
+    }
+
+    function goToNoteScreen() {
+      const name = document.getElementById('visitor-name').value.trim();
+      if(name === "") {
+        alert("Lütfen not bırakmadan önce isminizi girin.");
+        return;
+      }
+      showScreen('note-screen');
+    }
+
+    // --- NOT GÖNDERME MANTIĞI ---
+    function submitNote() {
+      const name = document.getElementById('visitor-name').value.trim();
+      const noteMessage = document.getElementById('visitor-note').value.trim();
+
+      if(noteMessage === "") {
+        alert("Lütfen bir mesaj yazın.");
+        return;
+      }
+
+      document.getElementById('btn-note').disabled = true;
+      document.getElementById('note-status').innerHTML = "Notunuz sevgiyle iletiliyor... 🕊️";
+
+      const payload = {
+        type: "note",
+        name: name,
+        message: noteMessage
+      };
+
+      fetch(SCRIPT_URL, {
+        redirect: "follow",
+        method: "POST",
+        body: JSON.stringify(payload),
+        headers: { "Content-Type": "text/plain;charset=utf-8" }
+      })
+      .then(response => response.json())
+      .then(result => {
+        if (result.status === 'success') {
+          document.getElementById('note-status').innerHTML = "✅ Notunuz başarıyla kaydedildi! Çok teşekkür ederiz.";
+          document.getElementById('visitor-note').value = ""; // Formu temizle
+          document.getElementById('visitor-name').value = ""; // Formu temizle
+        } else {
+          throw new Error(result.message);
+        }
+      })
+      .catch(err => {
+        document.getElementById('note-status').innerHTML = "❌ Bir hata oluştu. Lütfen tekrar deneyin.";
+        console.error(err);
+      })
+      .finally(() => {
+        document.getElementById('btn-note').disabled = false;
+      });
+    }
+
+    // --- FOTOĞRAF YÜKLEME MANTIĞI ---
     let filesList = [];
     let currentIndex = 0;
 
@@ -160,23 +317,20 @@
 
       reader.onload = function(e) {
         const base64Data = e.target.result.split(",")[1];
-        
         document.getElementById('status').innerHTML = `Yükleniyor... (${currentIndex + 1}/${filesList.length})`;
 
         const payload = {
+          type: "file",
           fileName: file.name,
           mimeType: file.type,
           base64: base64Data
         };
 
-        // Google Apps Script'e gönderim işlemi
         fetch(SCRIPT_URL, {
-          redirect: "follow", // Google'ın iç yönlendirmelerine izin veriyoruz (CORS için önemli)
+          redirect: "follow",
           method: "POST",
           body: JSON.stringify(payload),
-          headers: {
-            "Content-Type": "text/plain;charset=utf-8"
-          }
+          headers: { "Content-Type": "text/plain;charset=utf-8" }
         })
         .then(response => response.json())
         .then(result => {
@@ -193,7 +347,6 @@
           console.error(err);
         });
       };
-      
       reader.readAsDataURL(file);
     }
   </script>
